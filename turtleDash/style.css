@@ -1,0 +1,90 @@
+* {
+	margin: 0;
+	padding: 0;
+}
+html, body {
+	height: 100% !important;
+	padding: 0 !important;
+}
+body {
+	background: black;
+	font-family: "Balsamiq Sans", Monospace;
+}
+.startScreen {
+	margin: auto;
+	padding: 50px;
+	width: 100vmin;
+	text-align: center;
+	color: white;
+	font-size: 30px;
+	box-sizing: border-box;
+}
+.startScreen > * {
+	margin: 20px;
+	animation: bobble 4s ease infinite;
+}
+@keyframes bobble {
+	from, 50%, to {
+		transform: none;
+	}
+	25% {
+		transform: rotate(-15deg) scale(1.1);
+	}
+	75% {
+		transform: rotate(15deg) scale(1.1);
+	}
+}
+.startScreen button {
+	padding: 10px;
+	width: auto;
+	height: auto;
+	font-family: "Balsamiq Sans", Monospace;
+	font-size: inherit;
+	border-radius: 6px;
+	background: #CDAA7D;
+	border: 3px solid #A48864;
+}
+.startScreen .turtleAnimation {
+	background-image: url(assets/turtleSpritesheet.png);
+	background-position: 0 0;
+	background-size: 1520px 280px;
+	width: 380px;
+	height: 280px;
+	image-rendering: pixelated;
+	animation: turtleAnimation 1.1111s steps(4) infinite;
+	display: inline-block;
+}
+@keyframes turtleAnimation {
+	from {
+		background-position: 0 0;
+	}
+	to {
+		background-position: -1520px 0;
+	}
+}
+.container {
+	height: 100%;
+	padding: 0 !important;
+	text-align: center;
+	user-select: none;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	background: green;
+}
+canvas {
+	width: 100vmin;
+	height: 100%;
+	max-height: 100vmin;
+	background-image: url(assets/background.jpg);
+	background-size: 100% 100%;
+	image-rendering: pixelated;
+}
+code {
+	display: inline-block;
+	padding: 3px 5px;
+	background: #F0E68C;
+}
+.hidden {
+	display: none !important;
+}
