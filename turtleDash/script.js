@@ -233,7 +233,7 @@ function update() {
 	}
 	
 	var fishMax = 12 - max(~~(score / 2000), 10);
-	if(!random(0, 60) && fish.length < fishMax) {
+	if(!random(0, 45) && fish.length < fishMax) {
 		var allTheFish = [Assets.fish0, Assets.fish1, Assets.fish2];
 		var i = random(0, allTheFish.length);
 		var newFish = new Fish(allTheFish[i], [22, 37, 36][i], [20, 20, 30][i]);
