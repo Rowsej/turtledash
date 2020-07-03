@@ -351,9 +351,9 @@ function credits() {
 		title: "Credits",
 		html: `
 		<ul style="list-style-position: inside;">
-			<li>Made by Julian Rowse (me) for the STS 2020</li>
+			<li>Made by Rowsej</li>
 			<li>Turtle, orange fish and blue fish sprites designed by me, with the use of <a href="//pixilart.com/draw#" target="_blank">Pixilart</a></li>
-			<li>Orange-blue angler fish and Coke can designed by my sister; bought by me for a stack of <a href="//minecraft.gamepedia.com/Cobblestone" target="_blank">Cobblestone</a></li>
+			<li>Orange-blue angler fish and Coke can designed by ExoticButters</li>
 			<li><a href="//sweetalert2.github.io" target="_blank">SweetAlert</a> for the popup boxes (like this one)</li>
 			<li><a href="//sololearn.com" target="_blank">SoloLearn</a> for teaching me how to code</li>
 			<li><a href="//freepik.com/free-photos-vectors/background" target="_blank">Background vector created by freepik - www.freepik.com</a></li>
