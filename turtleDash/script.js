@@ -232,8 +232,9 @@ function update() {
 		});
 	}
 	
-	var fishMax = 12 - max(~~(score / 2000), 10);
-	if(!random(0, 45) && fish.length < fishMax) {
+	var fishMax = 12 - max(~~(score / 2000), 8);
+	var fishProb = 30 + min(~~(score / 100), 210);
+	if((!random(0, fishProb) && fish.length < fishMax) || fish.length == 0) {
 		var allTheFish = [Assets.fish0, Assets.fish1, Assets.fish2];
 		var i = random(0, allTheFish.length);
 		var newFish = new Fish(allTheFish[i], [22, 37, 36][i], [20, 20, 30][i]);
@@ -271,7 +272,8 @@ function update() {
 		fish.push(newFish);
 	}
 	var junkMax = 2 + min(~~(score / 2000), 10);
-	if(!random(0, 60) && junk.length < junkMax) {
+	var junkProb = 240 - max(~~(score / 100), 180);
+	if(!random(0, junkProb) && junk.length < junkMax) {
 		var allTheJunk = [Assets.cokeCan];
 		var i = random(0, allTheJunk.length);
 		var newJunk = new Junk(allTheJunk[i]);
