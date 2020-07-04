@@ -326,6 +326,7 @@ function update() {
 			junk.push(newJunk);
 		}
 	}
+}
 function draw() {
 	ctx.clearRect(0, 0, can.width, can.height);
 	
