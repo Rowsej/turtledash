@@ -411,9 +411,7 @@ function pause() {
 	});
 }
 async function gameOver(reason) {
-	alert(42);
 	await delay(1000);
-	alert(43);
 	var text1 = "";
 	var text2 = "";
 	if(reason == "energy") {
