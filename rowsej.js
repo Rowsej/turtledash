@@ -28,6 +28,11 @@ function selectEls(query) {
 function getTime() {
   return (new Date()).getTime();
 }
+async function delay(millis) {
+	return new Promise(function(resolve, reject) {
+		setTimeout(resolve, millis);
+	});
+}
 function random(a, b) {
 	if(a === undefined && b === undefined) {
 		return random(0, 2);
