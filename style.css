@@ -104,6 +104,10 @@ canvas {
 .alertBtn:focus {
 	border: 2px solid white;
 }
+.swal2-hide-slow {
+	animation: swal2-hide 0.3s forwards;
+	-webkit-animation: swal2-hide 0.3s forwards;
+}
 code {
 	display: inline-block;
 	padding: 3px 5px;
