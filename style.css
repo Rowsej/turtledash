@@ -70,15 +70,39 @@ body {
 	-webkit-user-select: none;
 	-moz-user-select: none;
 	-ms-user-select: none;
-	background: green;
+	background: -webkit-linear-gradient(-90deg, #EC9F05 0%, #FF4E00 74%);
+}
+.container2 {
+	margin: auto;
+	padding: 0 !important;
+	position: relative;
+	width: 100vmin;
+	height: 100vmin;
 }
 canvas {
-	width: 100vmin;
-	height: 100%;
-	max-height: 100vmin;
 	background-image: url(assets/background.jpg);
 	background-size: 100% 100%;
 	image-rendering: pixelated;
+}
+.pauseBtn {
+	color: white;
+	font-size: 4vmin;
+	position: absolute;
+	right: 5px;
+	top: 0;
+	background: none;
+	border: none;
+}
+.alertBtn {
+	padding: 13px 26px;
+	background: #2F85D5;
+	color: white;
+	border: none;
+	font-size: 17px;
+	border-radius: 5px;
+}
+.alertBtn:focus {
+	border: 2px solid white;
 }
 code {
 	display: inline-block;
