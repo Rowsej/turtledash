@@ -31,6 +31,7 @@ var startScreen, container;
 var keyStates = [];
 
 var score = 0;
+var paused = false;
 
 var turtle = {
 	pos: {
@@ -51,25 +52,24 @@ var turtle = {
 		ctx.drawImage(Assets.turtleSpritesheet, ~~this.animationPhase * 19, 0, 19, 14, this.pos.x, this.pos.y, this.size.w, this.size.h);
 		// Drawing the health bar
 		ctx.fillStyle = "black";
-		ctx.fillRect(420, 24, 76, 8);
+		ctx.fillRect(5, 64, 76, 8);
 		ctx.fillStyle = "green";
-		ctx.fillRect(421, 25, 74, 6);
+		ctx.fillRect(6, 65, 74, 6);
 		ctx.fillStyle = "red";
-		ctx.fillRect(495, 25, -((100 - this.health) * 0.74), 6);
+		ctx.fillRect(80, 65, -((100 - this.health) * 0.74), 6);
 		// Drawing the energy bar
 		ctx.fillStyle = "black";
-		ctx.fillRect(4, 24, 76, 8);
+		ctx.fillRect(5, 24, 76, 8);
 		ctx.fillStyle = "green";
-		ctx.fillRect(5, 25, 74, 6);
+		ctx.fillRect(6, 25, 74, 6);
 		ctx.fillStyle = "red";
-		ctx.fillRect(79, 25, -((100 - (this.energy > 99.5? 100 : this.energy)) * 0.74), 6);
+		ctx.fillRect(80, 25, -((100 - (this.energy > 99.5? 100 : this.energy)) * 0.74), 6);
 		// Typing(?) the text(...?)
 		ctx.fillStyle = "black";
 		ctx.font = "16px Balsamiq Sans";
-		ctx.textAlign = "right";
-		ctx.fillText(`Health: ${this.health}%`, 500, 0);
 		ctx.textAlign = "left";
-		ctx.fillText(`Energy: ${ceil(this.energy)}%`, 0, 0);
+		ctx.fillText(`Health: ${this.health}%`, 1, 40);
+		ctx.fillText(`Energy: ${ceil(this.energy)}%`, 1, 0);
 		// Showing the score (why in the turtle object, IDK)
 		ctx.textAlign = "center";
 		ctx.fillText(`Score: ${score}`, 250, 0);
@@ -92,11 +92,7 @@ var turtle = {
 		});
 		this.energy -= 0.05;
 		if(this.energy <= 0) {
-			swal.fire({
-				title: "Game over!",
-				html: "Uh oh! You didn't eat enough food!",
-				icon: "error"
-			});
+			gameOver("energy");
 		}
 	},
 	bitMap: []
@@ -159,10 +155,10 @@ window.addEventListener("load", async function() {
 	can = selectEl("canvas");
 	ctx = can.getContext("2d");
 	
+	await init();
+	
 	startScreen = selectEl(".startScreen");
 	container = selectEl(".container");
-	
-	await init();
 });
 async function init() {
 	function keyDownEvent(e) {
@@ -188,14 +184,25 @@ async function init() {
 	can.addEventListener("mouseup", keyUpEvent);
 	ctx.textBaseline = "top";
 	ctx.imageSmoothingEnabled = false;
-	
 	await Assets.load();
-	
 }
 function loop() {
 	update();
 	draw();
-	if(turtle.health > 0 && turtle.energy > 0) {
+	
+	if(turtle.health <= 0) {
+		setTimeout(async function() {
+			await gameOver("junk");
+		}, 0);
+		return;
+	} else if(turtle.energy <= 0) {
+		setTimeout(async function() {
+			await gameOver("energy");
+		}, 0);
+		return;
+	}
+	
+	if(!paused) {
 		window.requestAnimationFrame(loop);
 	}
 }
@@ -225,13 +232,6 @@ function update() {
 			score -= 100;
 		}
 	});
-	if(turtle.health <= 0) {
-		swal.fire({
-			title: "Game over!",
-			html: "Uh oh! You ate too much junk!<br/><br/>While this may seem funny, it's a real issue - more than <b><u>1,000</u> turtles die <u>each year</u></b> from plastic and other junk in the water. Is is estimated that by 2050, there will be more plastic than fish in the world's oceans.",
-			icon: "error"
-		});
-	}
 	
 	var fishMax = 12 - max(~~(score / 2000), 8);
 	var fishProb = 30 + min(~~(score / 100), 210);
@@ -342,6 +342,12 @@ function draw() {
 function play() {
 	startScreen.classList.add("hidden");
 	container.classList.remove("hidden");
+	var bodyDims = document.body.getBoundingClientRect();
+	var size = min(bodyDims.width, bodyDims.height);
+	var cont2 = selectEl(".container2");
+	can.setAttribute("style", `width: ${size}px; height: ${size}px;`);
+	cont2.setAttribute("style", `width: ${size}px; height: ${size}px;`);
+	paused = false;
 	loop();
 }
 function howToPlay() {
@@ -365,5 +371,70 @@ function credits() {
 			<li><a href=//www.unenvironment.org/news-and-stories/story/fatal-attraction-turtles-and-plastic" target="_blank">Fatal Attraction: Turtles and Plastic</a> for the facts about turtles and plastic in oceans</li>
 		</ul>`,
 		icon: "info"
+	});
+}
+function mainMenu() {
+	reset();
+	startScreen.classList.remove("hidden");
+	container.classList.add("hidden");
+	var alertEl = selectEl(".swal2-container");
+	if(alertEl) {
+		alertEl.classList.add("swal2-hide");
+		setTimeout(function() {
+			document.body.removeChild(selectEl(".swal2-container"));
+		}, 500);
+	}
+}
+function reset() {
+	score = 0;
+	turtle.health = 100;
+	turtle.energy = 100;
+	fish.splice(0, fish.length);
+	junk.splice(0, junk.length);
+	turtle.pos.y = 50;
+	turtle.vy = 0;
+	turtle.animationPhase = 0;
+}
+
+function pause() {
+	paused = true;
+	swal.fire({
+		title: "Pause game",
+		html: `What do you wish to do?<br/><button onclick="mainMenu();" class="alertBtn">Main menu</button>`,
+		confirmButtonText: "Unpause",
+		icon: "question"
+	}).then(function(result) {
+		if(result.isConfirmed) {
+			paused = false;
+			window.requestAnimationFrame(loop);
+		}
+	});
+}
+async function gameOver(reason) {
+	await delay(1000);
+	var text1 = "";
+	var text2 = "";
+	if(reason == "energy") {
+		text1 = "You didn't eat enough food!";
+	} else if(reason == "junk") {
+		text1 = "You ate too much junk!";
+		text2 = "While this may seem funny, it's a real issue - more than <b><u>1,000</u> turtles die <u>each year</u></b> from plastic and other junk in the water. Is is estimated that by 2050, there will be more plastic than fish in the world's oceans.";
+	}
+	swal.fire({
+		title: "Game over!",
+		html: `Uh oh! ${text1}<br/>Your final score is: <b>${score}</b>${text2.length > 0? "<br/><br/>" : ""}${text2}`,
+		confirmButtonText: "Restart",
+		showCancelButton: true,
+		cancelButtonText: "Main menu",
+		allowOutsideClick: false,
+		icon: "error"
+	}).then(function(result) {
+		var button = result.isConfirmed? "restart" : "mainMenu";
+		if(button == "restart") {
+			reset();
+			loop();
+		} else if(button == "mainMenu") {
+			mainMenu();
+		}
 	});
 }
