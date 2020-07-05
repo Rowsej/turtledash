@@ -379,10 +379,7 @@ function mainMenu() {
 	container.classList.add("hidden");
 	var alertEl = selectEl(".swal2-container");
 	if(alertEl) {
-		alertEl.classList.add("swal2-hide");
-		setTimeout(function() {
-			document.body.removeChild(selectEl(".swal2-container"));
-		}, 500);
+		alertEl.classList.add("swal2-hide-slow");
 	}
 }
 function reset() {
