@@ -31,6 +31,7 @@ var startScreen, container;
 var keyStates = [];
 
 var score = 0;
+var highscore = 0;
 var paused = false;
 
 var turtle = {
@@ -399,6 +400,7 @@ function pause() {
 		title: "Pause game",
 		html: `What do you wish to do?<br/><button onclick="mainMenu();" class="alertBtn">Main menu</button>`,
 		confirmButtonText: "Unpause",
+		allowOutsideClick: false,
 		icon: "question"
 	}).then(function(result) {
 		if(result.isConfirmed) {
@@ -417,15 +419,34 @@ async function gameOver(reason) {
 		text1 = "You ate too much junk!";
 		text2 = "While this may seem funny, it's a real issue - more than <b><u>1,000</u> turtles die <u>each year</u></b> from plastic and other junk in the water. Is is estimated that by 2050, there will be more plastic than fish in the world's oceans.";
 	}
-	swal.fire({
-		title: "Game over!",
-		html: `Uh oh! ${text1}<br/>Your final score is: <b>${score}</b>${text2.length > 0? "<br/><br/>" : ""}${text2}`,
-		confirmButtonText: "Restart",
-		showCancelButton: true,
-		cancelButtonText: "Main menu",
-		allowOutsideClick: false,
-		icon: "error"
-	}).then(function(result) {
+	swal.fire((function() {
+		if(score > highscore) {
+			return {
+				title: "New highscore!",
+				html: `Your old highscore was <b>${highscore}</b>, and your new highscore is <b>${score}! That's <b>${(function() {
+					var a = highscore;
+					var b = score;
+					highscore = score;
+					return b - a;
+				})()}</b> more points than your previous highscore!`,
+				confirmButtonText: "Restart",
+				showCancelButton: true,
+				cancelButtonText: "Main menu",
+				allowOutsideClick: false,
+				icon: "success"
+			};
+		} else {
+			return {
+				title: "Game over!",
+				html: `Uh oh! ${text1}<br/>Your final score is: <b>${score}</b>${text2.length > 0? "<br/><br/>" : ""}${text2}`,
+				confirmButtonText: "Restart",
+				showCancelButton: true,
+				cancelButtonText: "Main menu",
+				allowOutsideClick: false,
+				icon: "error"
+			};
+		}
+	})()).then(function(result) {
 		var button = result.isConfirmed? "restart" : "mainMenu";
 		if(button == "restart") {
 			reset();
