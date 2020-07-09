@@ -386,6 +386,11 @@ function mainMenu() {
 	var alertEl = selectEl(".swal2-container");
 	if(alertEl) {
 		alertEl.classList.add("swal2-hide-slow");
+		setTimeout(function() {
+			if(selectEl(".swal2-container")) {
+				selectEl(".swal2-container").parentNode.removeChild(selectEl(".swal2-container"));
+			}
+		});
 	}
 }
 function reset() {
