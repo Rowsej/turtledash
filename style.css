@@ -80,7 +80,7 @@ body {
 	height: 100vmin;
 }
 canvas {
-	background-image: url(assets/background.jpg);
+	background-image: url(assets/background.png);
 	background-size: 100% 100%;
 	image-rendering: pixelated;
 }
