@@ -373,7 +373,6 @@ function credits() {
 			<li>Orange-blue angler fish, Coke can, plastic bag, straw, and background designed by ExoticButters</li>
 			<li><a href="//sweetalert2.github.io" target="_blank">SweetAlert</a> for the popup boxes (like this one)</li>
 			<li><a href="//sololearn.com" target="_blank">SoloLearn</a> for teaching me how to code</li>
-			<li><a href="//freepik.com/free-photos-vectors/background" target="_blank">Background vector created by freepik - www.freepik.com</a></li>
 			<li><a href=//www.unenvironment.org/news-and-stories/story/fatal-attraction-turtles-and-plastic" target="_blank">Fatal Attraction: Turtles and Plastic</a> for the facts about turtles and plastic in oceans</li>
 		</ul>`,
 		icon: "info"
