@@ -426,7 +426,7 @@ async function gameOver(reason) {
 		text1 = "You didn't eat enough food!";
 	} else if(reason == "junk") {
 		text1 = "You ate too much junk!";
-		text2 = "While this may seem funny, it's a real issue - more than <b><u>1,000</u> turtles die <u>each year</u></b> from plastic and other junk in the water. Is is estimated that by 2050, there will be more plastic than fish in the world's oceans.";
+		text2 = "While this may seem funny, it's a real issue - more than <b><u>1,000</u> turtles die <u>each year</u></b> from plastic and other junk in the water. It is estimated that by 2050, there will be more plastic than fish in the world's oceans.";
 	}
 	swal.fire((function() {
 		if(score > highscore && highscore > -1) {
